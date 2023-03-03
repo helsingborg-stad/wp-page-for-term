@@ -14,7 +14,10 @@ class App
 
         add_filter('term_link', [$this,'replaceTermArchiveLink'], 10, 2);
         add_action('template_redirect', [$this,'redirectTermToPageForTerm']);
+
+        add_action('init', [$this, 'setupCustomColumns']);
     }
+
 
     /**
      * Updates the "page_for_term" ACF field for each term ID that was updated on the post.
@@ -57,6 +60,15 @@ class App
         update_field(self::IS_PAGE_FOR_TERM_FIELD_KEY, $terms, $pageId);
     }
 
+    public function setupCustomColumns()
+    {
+        $taxonomies = get_taxonomies(array(), 'names');
+        foreach ($taxonomies as $taxonomy) {
+            add_filter('manage_edit-' . $taxonomy . '_columns', [$this,'addCustomColumnToEditTags']);
+            add_filter('manage_' . $taxonomy . '_custom_column', [$this,'displayCustomColumnContent'], 10, 3);
+        }
+    }
+
     /**
      * Replaces the link to a term archive with the permalink of the associated page.
      *
@@ -65,7 +77,7 @@ class App
      *
      * @return string The modified term archive link.
      */
-    private function replaceTermArchiveLink($termLink, $term)
+    public function replaceTermArchiveLink($termLink, $term)
     {
         $pageId = get_field('page_for_term', "term_{$term->term_id}");
         if ($pageId) {
@@ -77,7 +89,7 @@ class App
     /**
      * Redirects a term archive to its associated page if the "page_for_term" field is set.
      */
-    private function redirectTermToPageForTerm()
+    public function redirectTermToPageForTerm()
     {
         if (is_tax()) {
             $term = get_queried_object();
@@ -87,5 +99,56 @@ class App
                 exit;
             }
         }
+    }
+
+    /**
+     * Add custom column to edit-tags.php page for all publicly available taxonomies.
+     *
+     * @param array $columns An array of existing column names and labels.
+     *
+     * @return array An array of modified column names and labels.
+     */
+    public function addCustomColumnToEditTags($columns)
+    {
+        $new_columns = array();
+
+        foreach ($columns as $key => $value) {
+            $new_columns[$key] = $value;
+
+            // Insert the new column as the column following the 'name' column
+            if ($key === 'name') {
+                $new_columns['pageForTerm'] = __('Page for term', 'wp-page-for-term');
+            }
+        }
+
+        return $new_columns;
+    }
+    /**
+     * Display the content for the custom column on the edit-tags.php screen.
+     *
+     * @param string $content The existing content for the column.
+     * @param string $columnName The name of the custom column.
+     * @param int $termId The ID of the current term being displayed.
+     *
+     * @return string The modified content for the column.
+     */
+    public function displayCustomColumnContent($content, $columnName, $termId)
+    {
+        if ($columnName === 'pageForTerm') {
+            $pageForTerm = get_field('page_for_term', 'term_' . $termId);
+            if ($pageForTerm) {
+                $content = '<a href="' . get_edit_post_link($pageForTerm) . '">';
+                $content .= get_the_title($pageForTerm);
+                $content .= '</a>';
+
+                $content .= ' | <a href="' . get_permalink($pageForTerm) . '">';
+                $content .= __('View');
+                $content .= '</a>';
+            } else {
+                $content = '—';
+            }
+        }
+
+        return $content;
     }
 }
