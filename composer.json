@@ -1,0 +1,27 @@
+{
+    "name": "annalinneajohansson/wp-page-for-term",
+    "description": "Allows you to set a static page as the replacement for any term archive.",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "scripts": {
+        "test": "./vendor/bin/phpunit --testdox",
+        "coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --testdox",
+        "minimal": "./vendor/bin/phpunit"
+    },
+    "authors": [
+        {
+            "name": "Anna Johansson",
+            "email": "anna.johansson4@helsingborg.se"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"wpPageForTerm\\": "source/php/"}
+    },
+    "minimum-stability": "stable",
+    "require": {},
+    "require-dev": {
+        "brain/monkey": "^2.6",
+        "codedungeon/phpunit-result-printer": "^0.31.0",
+        "phpunit/phpunit": "^9.5"
+    }
+}
