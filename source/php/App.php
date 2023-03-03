@@ -9,6 +9,7 @@ class App
 
     public function __construct()
     {
+
         add_action('acf/save_post', [$this, 'updatePageForTerm'], 20);
         add_action('acf/save_post', [$this, 'updateIsPageForTerm'], 20);
 
@@ -117,7 +118,7 @@ class App
 
             // Insert the new column as the column following the 'name' column
             if ($key === 'name') {
-                $new_columns['pageForTerm'] = __('Page for term', 'wp-page-for-term');
+                $new_columns['pageForTerm'] = __('Page');
             }
         }
 

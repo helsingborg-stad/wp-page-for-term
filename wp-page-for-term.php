@@ -23,7 +23,13 @@ define('WP_PLUGIN_PAGE_FOR_TERM_URL', plugins_url('', __FILE__));
 define('WP_PLUGIN_PAGE_FOR_TERM_TEMPLATE_PATH', WP_PLUGIN_PAGE_FOR_TERM_PATH . 'templates/');
 define('WP_PLUGIN_PAGE_FOR_TERM_TEXT_DOMAIN', 'wp-page-for-term');
 
-load_plugin_textdomain(WP_PLUGIN_PAGE_FOR_TERM_TEXT_DOMAIN, false, WP_PLUGIN_PAGE_FOR_TERM_PATH . '/languages');
+add_action('init', function () {
+    load_plugin_textdomain(
+        WP_PLUGIN_PAGE_FOR_TERM_TEXT_DOMAIN,
+        false,
+        dirname(plugin_basename(__FILE__)) . '/languages'
+    );
+});
 
 require_once WP_PLUGIN_PAGE_FOR_TERM_PATH . 'Public.php';
 
