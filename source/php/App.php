@@ -11,6 +11,9 @@ class App
     {
         add_action('acf/save_post', [$this, 'updatePageForTerm'], 20);
         add_action('acf/save_post', [$this, 'updateIsPageForTerm'], 20);
+
+        add_filter('term_link', [$this,'replaceTermArchiveLink'], 10, 2);
+        add_action('template_redirect', [$this,'redirectTermToPageForTerm']);
     }
 
     /**
@@ -52,5 +55,37 @@ class App
         $terms[] = $termId;
 
         update_field(self::IS_PAGE_FOR_TERM_FIELD_KEY, $terms, $pageId);
+    }
+
+    /**
+     * Replaces the link to a term archive with the permalink of the associated page.
+     *
+     * @param string $termLink The original term archive link.
+     * @param object $term The current term object.
+     *
+     * @return string The modified term archive link.
+     */
+    private function replaceTermArchiveLink($termLink, $term)
+    {
+        $pageId = get_field('page_for_term', "term_{$term->term_id}");
+        if ($pageId) {
+            $termLink = get_permalink($pageId);
+        }
+        return $termLink;
+    }
+
+    /**
+     * Redirects a term archive to its associated page if the "page_for_term" field is set.
+     */
+    private function redirectTermToPageForTerm()
+    {
+        if (is_tax()) {
+            $term = get_queried_object();
+            $pageId = get_field('page_for_term', $term);
+            if ($pageId) {
+                wp_safe_redirect(get_permalink($pageId), 301);
+                exit;
+            }
+        }
     }
 }
