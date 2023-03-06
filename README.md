@@ -9,14 +9,14 @@
 <p>
   Allows you to set a static page as the replacement for any term archive.
   <br />
-  <a href="https://github.com/annalinneajohansson/wp-page-for-term/issues">Report Bug</a>
+  <a href="https://github.com/helsingborg-stad/wp-page-for-term/issues">Report Bug</a>
   ·
-  <a href="https://github.com/annalinneajohansson/wp-page-for-term/issues">Request Feature</a>
+  <a href="https://github.com/helsingborg-stad/wp-page-for-term/issues">Request Feature</a>
 </p>
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
-- [About WP Page For Term](#about-WP Page For Term)
+- [About WP Page For Term](#about)
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -29,8 +29,6 @@
 - [Acknowledgements](#acknowledgements)
 
 ## About WP Page For Term
-
-[![WP Page For Term Screen Shot][product-screenshot]](https://example.com)
 
 Here's a blank template to get started:
 
@@ -60,7 +58,7 @@ brew install node
 
 1. Clone the repo
 ```sh
-git clone https://github.com/annalinneajohansson/wp-page-for-term.git
+git clone https://github.com/helsingborg-stad/wp-page-for-term.git
 ```
 2. Install and build NPM packages
 ```sh
@@ -75,15 +73,9 @@ composer install
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
 ## Deploy
 
-Instructions for deploys.
-
 ## Roadmap
-
-See the [open issues][issues-url] for a list of proposed features (and known issues).
 
 ## Contributing
 
@@ -106,14 +98,14 @@ Distributed under the [MIT License][license-url].
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/annalinneajohansson/wp-page-for-term.svg?style=flat-square
-[contributors-url]: https://github.com/annalinneajohansson/wp-page-for-term/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/annalinneajohansson/wp-page-for-term.svg?style=flat-square
-[forks-url]: https://github.com/annalinneajohansson/wp-page-for-term/network/members
-[stars-shield]: https://img.shields.io/github/stars/annalinneajohansson/wp-page-for-term.svg?style=flat-square
-[stars-url]: https://github.com/annalinneajohansson/wp-page-for-term/stargazers
-[issues-shield]: https://img.shields.io/github/issues/annalinneajohansson/wp-page-for-term.svg?style=flat-square
-[issues-url]: https://github.com/annalinneajohansson/wp-page-for-term/issues
-[license-shield]: https://img.shields.io/github/license/annalinneajohansson/wp-page-for-term.svg?style=flat-square
-[license-url]: https://raw.githubusercontent.com/annalinneajohansson/wp-page-for-term/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/helsingborg-stad/wp-page-for-term.svg?style=flat-square
+[contributors-url]: https://github.com/helsingborg-stad/wp-page-for-term/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/helsingborg-stad/wp-page-for-term.svg?style=flat-square
+[forks-url]: https://github.com/helsingborg-stad/wp-page-for-term/network/members
+[stars-shield]: https://img.shields.io/github/stars/helsingborg-stad/wp-page-for-term.svg?style=flat-square
+[stars-url]: https://github.com/helsingborg-stad/wp-page-for-term/stargazers
+[issues-shield]: https://img.shields.io/github/issues/helsingborg-stad/wp-page-for-term.svg?style=flat-square
+[issues-url]: https://github.com/helsingborg-stad/wp-page-for-term/issues
+[license-shield]: https://img.shields.io/github/license/helsingborg-stad/wp-page-for-term.svg?style=flat-square
+[license-url]: https://raw.githubusercontent.com/helsingborg-stad/wp-page-for-term/master/LICENSE
 [product-screenshot]: images/screenshot.png
