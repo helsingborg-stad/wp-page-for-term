@@ -1,5 +1,5 @@
 {
-    "name": "annalinneajohansson/wp-page-for-term",
+    "name": "helsingborg-stad/wp-page-for-term",
     "description": "Allows you to set a static page as the replacement for any term archive.",
     "type": "wordpress-plugin",
     "license": "MIT",
