@@ -41,6 +41,33 @@
             'allow_custom' => 0,
             'other_choice' => 0,
         ),
+        1 => array(
+            'key' => 'field_641035087366a',
+            'label' => __('Post type', 'wp-page-for-term'),
+            'name' => 'page_for_term_posttype',
+            'aria-label' => '',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'post' => __('Posts', 'wp-page-for-term'),
+            ),
+            'default_value' => __('post', 'wp-page-for-term'),
+            'return_format' => 'value',
+            'multiple' => 0,
+            'allow_custom' => 0,
+            'placeholder' => __('Select post type', 'wp-page-for-term'),
+            'search_placeholder' => '',
+            'allow_null' => 0,
+            'ui' => 1,
+            'ajax' => 0,
+        ),
     ),
     'location' => array(
         0 => array(

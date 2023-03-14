@@ -17,6 +17,8 @@ class App
         add_action('template_redirect', [$this,'redirectTermToPageForTerm']);
 
         add_action('init', [$this, 'setupCustomColumns']);
+
+        add_action('pre_get_posts', [$this, 'setupSecondaryQuery'], 2);
     }
 
 
@@ -102,6 +104,7 @@ class App
         }
     }
 
+
     /**
      * Add custom column to edit-tags.php page for all publicly available taxonomies.
      *
@@ -151,5 +154,54 @@ class App
         }
 
         return $content;
+    }
+
+
+    /**
+     * Sets up a secondary query for the current page based on the is_page_for_term field.
+     *
+     * @note WP_Query with tax_query set defaults to post_type = 'any' instead of 'post'.
+     *
+     * @param WP_Query $query The current WP_Query object.
+     * @return void
+     */
+    public function setupSecondaryQuery($query)
+    {
+        if (!$query->is_main_query()) {
+            return;
+        }
+
+        $isPageForTerm = get_field('is_page_for_term', $query->queried_object_id);
+        $postType = get_field('page_for_term_posttype', $query->queried_object_id);
+
+        if ($postType && is_array($isPageForTerm) && !empty($isPageForTerm)) {
+            $postsPerPage = isset($_REQUEST['number']) ? $_REQUEST['number'] : get_option('posts_per_page');
+            $secondaryQueryArgs =
+            [
+            'tax_query' => [
+                'relation' => 'OR',
+            ],
+            'post_type' => $postType,
+            'posts_per_page' => $postsPerPage,
+            'paged' => ( get_query_var('paged') ) ? get_query_var('paged') : 1,
+            ];
+
+            foreach ($isPageForTerm as $termId) {
+                $term = get_term($termId);
+                if (!$term || is_wp_error($term)) {
+                    continue;
+                }
+                $secondaryQueryArgs['tax_query'][] = [
+                'taxonomy' => $term->taxonomy,
+                'field' => 'term_id',
+                'terms' => $term->term_id,
+                ];
+            }
+
+            $secondaryQueryArgs = apply_filters('secondaryQueryArgs', $secondaryQueryArgs);
+            $secondaryQuery = apply_filters('secondaryQuery', new \WP_Query($secondaryQueryArgs));
+
+            $query->set('secondaryQuery', $secondaryQuery);
+        }
     }
 }

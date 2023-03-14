@@ -35,6 +35,33 @@
             "toggle": 0,
             "allow_custom": 0,
             "other_choice": 0
+        },
+        {
+            "key": "field_641035087366a",
+            "label": "Post type",
+            "name": "page_for_term_posttype",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "post": "Posts"
+            },
+            "default_value": "post",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_custom": 0,
+            "placeholder": "Select post type",
+            "search_placeholder": "",
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0
         }
     ],
     "location": [
