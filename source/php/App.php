@@ -10,6 +10,7 @@ class App
     public function __construct()
     {
         add_action('acf/save_post', [$this, 'updatePageForTerm'], 1, 1);
+
         add_action('template_redirect', [$this,'redirectTermToPageForTerm']);
 
         add_action('init', [$this, 'setupCustomColumns']);

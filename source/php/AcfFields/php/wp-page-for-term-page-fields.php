@@ -47,7 +47,9 @@
             'name' => 'is_page_for_term_posttype',
             'aria-label' => '',
             'type' => 'select',
-            'instructions' => __('Post type to display in the term archive on this page.', 'wp-page-for-term'),
+            'instructions' => __('Post type to display in the term archive on this page.
+
+Note that if the term is available to multiple post types, some content will be excluded if the term archive is replaced this way.', 'wp-page-for-term'),
             'required' => 0,
             'conditional_logic' => array(
                 0 => array(
@@ -89,7 +91,7 @@
     'position' => 'normal',
     'style' => 'default',
     'label_placement' => 'left',
-    'instruction_placement' => 'label',
+    'instruction_placement' => 'field',
     'hide_on_screen' => '',
     'active' => true,
     'description' => '',
