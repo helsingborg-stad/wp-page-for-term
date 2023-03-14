@@ -4,8 +4,8 @@ namespace wpPageForTerm;
 
 class App
 {
-    protected const PAGE_FOR_TERM_FIELD_KEY = 'page_for_term';
-    protected const IS_PAGE_FOR_TERM_FIELD_KEY = 'is_page_for_term';
+    protected const PAGE_FOR_TERM_FIELD_KEY = 'field_6401a495f45b5';
+    protected const IS_PAGE_FOR_TERM_FIELD_KEY = 'field_63fe0756de689';
 
     public function __construct()
     {
@@ -27,40 +27,14 @@ class App
      *
      * @param int $postId The ID of the post being saved.
      */
-    public function updatePageForTerm($postId)
+    public function updatePageForTerm($currentPostId)
     {
-        if (
-            !isset($_POST['acf'][self::PAGE_FOR_TERM_FIELD_KEY])
-            || !is_array($_POST['acf'][self::PAGE_FOR_TERM_FIELD_KEY])
-        ) {
-            return;
+        $termIds = $_POST['acf'][self::IS_PAGE_FOR_TERM_FIELD_KEY] ?? [];
+        if (!empty($termIds)) {
+            foreach ($termIds as $termId) {
+                update_field(self::PAGE_FOR_TERM_FIELD_KEY, $currentPostId, "term_{$termId}");
+            }
         }
-
-        $termIds = $_POST['acf'][self::PAGE_FOR_TERM_FIELD_KEY];
-        foreach ($termIds as $termId) {
-            $termKey = "term_{$termId}";
-            update_field(self::PAGE_FOR_TERM_FIELD_KEY, $postId, $termKey);
-        }
-    }
-
-    /**
-     * Updates the "is_page_for_term" ACF field for the page associated with the current term ID.
-     *
-     * @param int $postId The ID of the post being saved.
-     */
-    public function updateIsPageForTerm($postId)
-    {
-        if (!isset($_POST['acf'][self::IS_PAGE_FOR_TERM_FIELD_KEY])) {
-            return;
-        }
-
-        $termId = (int) explode('_', $postId)[1];
-        $pageId = (int) $_POST['acf'][self::IS_PAGE_FOR_TERM_FIELD_KEY];
-
-        $terms = (array) get_field(self::PAGE_FOR_TERM_FIELD_KEY, $pageId);
-        $terms[] = $termId;
-
-        update_field(self::IS_PAGE_FOR_TERM_FIELD_KEY, $terms, $pageId);
     }
 
     public function setupCustomColumns()

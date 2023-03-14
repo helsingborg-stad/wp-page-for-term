@@ -7,11 +7,11 @@
     'fields' => array(
         0 => array(
             'key' => 'field_63fe0756de689',
-            'label' => __('Is page for term', 'wp-page-for-term'),
+            'label' => __('Term', 'wp-page-for-term'),
             'name' => 'is_page_for_term',
             'aria-label' => '',
             'type' => 'acfe_taxonomy_terms',
-            'instructions' => __('Replaces the archive for:', 'wp-page-for-term'),
+            'instructions' => __('This page replaces the archive for the selected terms.', 'wp-page-for-term'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -47,9 +47,16 @@
             'name' => 'page_for_term_posttype',
             'aria-label' => '',
             'type' => 'select',
-            'instructions' => '',
+            'instructions' => __('Post type to display in the term archive on this page.', 'wp-page-for-term'),
             'required' => 0,
-            'conditional_logic' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_63fe0756de689',
+                        'operator' => '!=empty',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -62,11 +69,11 @@
             'return_format' => 'value',
             'multiple' => 0,
             'allow_custom' => 0,
-            'placeholder' => __('Select post type', 'wp-page-for-term'),
             'search_placeholder' => '',
             'allow_null' => 0,
             'ui' => 1,
             'ajax' => 0,
+            'placeholder' => '',
         ),
     ),
     'location' => array(

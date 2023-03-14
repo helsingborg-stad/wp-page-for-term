@@ -30,7 +30,22 @@
             'acfe_bidirectional' => array(
                 'acfe_bidirectional_enabled' => '0',
             ),
+            'acfe_settings' => array(
+                '6410391ba13df' => array(
+                    'acfe_settings_location' => '',
+                    'acfe_settings_settings' => array(
+                        '64103920a13e0' => array(
+                            'acfe_settings_setting_type' => 'hide_field',
+                            'acfe_settings_setting_operator' => 'true',
+                        ),
+                    ),
+                ),
+            ),
+            'acfe_validate' => '',
             'allow_null' => 1,
+            'acfe_permissions' => array(
+                0 => 'super_admin',
+            ),
             'ui' => 1,
             'save_post_type' => '',
         ),
@@ -50,11 +65,12 @@
     'label_placement' => 'left',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => true,
+    'active' => false,
     'description' => '',
     'show_in_rest' => 0,
     'acfe_display_title' => '',
     'acfe_autosync' => '',
+    'acfe_permissions' => '',
     'acfe_form' => 0,
     'acfe_meta' => '',
     'acfe_note' => '',

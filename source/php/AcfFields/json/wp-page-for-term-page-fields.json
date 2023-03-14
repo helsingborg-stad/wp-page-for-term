@@ -4,11 +4,11 @@
     "fields": [
         {
             "key": "field_63fe0756de689",
-            "label": "Is page for term",
+            "label": "Term",
             "name": "is_page_for_term",
             "aria-label": "",
             "type": "acfe_taxonomy_terms",
-            "instructions": "Replaces the archive for:",
+            "instructions": "This page replaces the archive for the selected terms.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -42,9 +42,16 @@
             "name": "page_for_term_posttype",
             "aria-label": "",
             "type": "select",
-            "instructions": "",
+            "instructions": "Post type to display in the term archive on this page.",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_63fe0756de689",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -57,11 +64,11 @@
             "return_format": "value",
             "multiple": 0,
             "allow_custom": 0,
-            "placeholder": "Select post type",
             "search_placeholder": "",
             "allow_null": 0,
             "ui": 1,
-            "ajax": 0
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
