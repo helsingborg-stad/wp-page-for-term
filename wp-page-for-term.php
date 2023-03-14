@@ -19,25 +19,17 @@ if (! defined('WPINC')) {
 }
 
 define('WP_PLUGIN_PAGE_FOR_TERM_PATH', plugin_dir_path(__FILE__));
-define('WP_PLUGIN_PAGE_FOR_TERM_URL', plugins_url('', __FILE__));
-define('WP_PLUGIN_PAGE_FOR_TERM_TEMPLATE_PATH', WP_PLUGIN_PAGE_FOR_TERM_PATH . 'templates/');
-define('WP_PLUGIN_PAGE_FOR_TERM_TEXT_DOMAIN', 'wp-page-for-term');
-
-add_action('init', function () {
-    load_plugin_textdomain(
-        WP_PLUGIN_PAGE_FOR_TERM_TEXT_DOMAIN,
-        false,
-        dirname(plugin_basename(__FILE__)) . '/languages'
-    );
-});
-
-require_once WP_PLUGIN_PAGE_FOR_TERM_PATH . 'Public.php';
 
 // Register the autoloader
 require __DIR__ . '/vendor/autoload.php';
 
+add_action('plugins_loaded', function () {
+});
+
 // Acf auto import and export
 add_action('acf/init', function () {
+    load_plugin_textdomain('wp-page-for-term', false, dirname(plugin_basename(__FILE__)) . '/languages');
+
     $acfExportManager = new \AcfExportManager\AcfExportManager();
     $acfExportManager->setTextdomain('wp-page-for-term');
     $acfExportManager->setExportFolder(WP_PLUGIN_PAGE_FOR_TERM_PATH . 'source/php/AcfFields/');

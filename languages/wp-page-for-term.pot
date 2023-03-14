@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-03T15:45:07+00:00\n"
+"POT-Creation-Date: 2023-03-14T14:39:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: wp-page-for-term\n"
@@ -35,17 +35,35 @@ msgid "https://github.com/annalinneajohansson"
 msgstr ""
 
 #: source/php/AcfFields/php/wp-page-for-term-page-fields.php:8
-#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:12
 msgid "Is page for term"
 msgstr ""
 
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:12
+msgid "Term"
+msgstr ""
+
 #: source/php/AcfFields/php/wp-page-for-term-page-fields.php:16
-msgid "Replaces the archive for:"
+msgid "This page replaces the archive for the selected terms."
+msgstr ""
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:48
+msgid "Post type"
+msgstr ""
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:52
+msgid "Post type to display in the term archive on this page. Note that if the term is available to multiple post types, some content will be excluded if the term archive is replaced this way."
+msgstr ""
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:68
+msgid "Posts"
+msgstr ""
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:70
+msgid "post"
 msgstr ""
 
 #: source/php/AcfFields/php/wp-page-for-term-term-fields.php:8
 #: source/php/AcfFields/php/wp-page-for-term-term-fields.php:12
-#: source/php/App.php:120
 msgid "Page for term"
 msgstr ""
 

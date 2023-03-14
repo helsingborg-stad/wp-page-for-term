@@ -29,7 +29,7 @@ msgstr "https://github.com/annalinneajohansson/wp-page-for-term"
 
 #. Description of the plugin
 msgid "Allows you to set a static page as the replacement for any term archive."
-msgstr "Tillåter dig att ställa in en statisk sida som ersättning för alla termer arkiv."
+msgstr "Låter dig att ställa in en vanlig sida som arkivsida för termer."
 
 #. Author of the plugin
 msgid "Anna Johansson"
@@ -40,20 +40,38 @@ msgid "https://github.com/annalinneajohansson"
 msgstr "https://github.com/annalinneajohansson"
 
 #: source/php/AcfFields/php/wp-page-for-term-page-fields.php:8
-#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:12
 msgid "Is page for term"
-msgstr "Ersätter term-sida"
-
-#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:16
-msgid "Replaces the archive for:"
-msgstr "Ersätter arkivsida för:"
+msgstr "Ersätt term-arkiv"
 
 #: source/php/AcfFields/php/wp-page-for-term-term-fields.php:8
 #: source/php/AcfFields/php/wp-page-for-term-term-fields.php:12
-#: source/php/App.php:120
 msgid "Page for term"
 msgstr "Sida för term"
 
 #: source/php/AcfFields/php/wp-page-for-term-term-fields.php:16
 msgid "Redirect this term to the selected page."
 msgstr "Omdirigera denna term till den valda sidan."
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:12
+msgid "Term"
+msgstr "Term"
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:16
+msgid "This page replaces the archive for the selected terms."
+msgstr "Denna sida ersätter arkivet för valda termer."
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:48
+msgid "Post type"
+msgstr "Posttyp"
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:68
+msgid "Posts"
+msgstr "Inlägg"
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:70
+msgid "post"
+msgstr "post"
+
+#: source/php/AcfFields/php/wp-page-for-term-page-fields.php:52
+msgid "Post type to display in the term archive on this page. Note that if the term is available to multiple post types, some content will be excluded if the term archive is replaced this way."
+msgstr "Posttyp som ska visas i arkivet för termen på denna sida. Observera att om termen är tillgänglig för flera posttyper så kommer visst innehåll att uteslutas om termens arkiv ersätts på detta sätt."
