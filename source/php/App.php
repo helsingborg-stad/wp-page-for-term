@@ -4,11 +4,15 @@ namespace wpPageForTerm;
 
 class App
 {
-    protected const PAGE_FIELD_KEY = 'field_63fe0756de689';
-    protected const TERM_FIELD_KEY = 'field_6401a495f45b5';
+    protected const PAGE_FIELD_KEY     = 'field_63fe0756de689';
+    protected const POSTTYPE_FIELD_KEY = 'field_641035087366a';
+    protected const TERM_FIELD_KEY     = 'field_6401a495f45b5';
 
     public function __construct()
     {
+
+        add_filter('acf/load_field/key=' . self::POSTTYPE_FIELD_KEY, [$this, 'loadPageForTermPostTypes']);
+
         add_action('acf/save_post', [$this, 'updatePageForTerm'], 1, 1);
 
         add_action('template_redirect', [$this,'redirectTermToPageForTerm']);
@@ -17,6 +21,18 @@ class App
         add_action('pre_get_posts', [$this, 'setupSecondaryQuery'], 2);
     }
 
+    public function loadPageForTermPostTypes($field)
+    {
+        $field['choices'] = [];
+
+        $postTypes = get_post_types(array('public' => true), 'objects');
+        if (!empty($postTypes)) {
+            foreach ($postTypes as $postType) {
+                $field['choices'][$postType->name] = $postType->label;
+            }
+        }
+        return $field;
+    }
    /**
     * Keeps the `page_for_term` field on the terms in sync with the `is_page_for_term` field on the page.
     *
