@@ -44,7 +44,7 @@
         1 => array(
             'key' => 'field_641035087366a',
             'label' => __('Post type', 'wp-page-for-term'),
-            'name' => 'page_for_term_posttype',
+            'name' => 'is_page_for_term_posttype',
             'aria-label' => '',
             'type' => 'select',
             'instructions' => __('Post type to display in the term archive on this page.', 'wp-page-for-term'),

@@ -4,39 +4,59 @@ namespace wpPageForTerm;
 
 class App
 {
-    protected const PAGE_FOR_TERM_FIELD_KEY = 'field_6401a495f45b5';
-    protected const IS_PAGE_FOR_TERM_FIELD_KEY = 'field_63fe0756de689';
+    protected const PAGE_FIELD_KEY = 'field_63fe0756de689';
+    protected const TERM_FIELD_KEY = 'field_6401a495f45b5';
 
     public function __construct()
     {
-
-        add_action('acf/save_post', [$this, 'updatePageForTerm'], 20);
-        add_action('acf/save_post', [$this, 'updateIsPageForTerm'], 20);
-
-        add_filter('term_link', [$this,'replaceTermArchiveLink'], 10, 2);
+        add_action('acf/save_post', [$this, 'updatePageForTerm'], 1, 1);
         add_action('template_redirect', [$this,'redirectTermToPageForTerm']);
 
         add_action('init', [$this, 'setupCustomColumns']);
-
         add_action('pre_get_posts', [$this, 'setupSecondaryQuery'], 2);
     }
 
-
-    /**
-     * Updates the "page_for_term" ACF field for each term ID that was updated on the post.
-     *
-     * @param int $postId The ID of the post being saved.
-     */
-    public function updatePageForTerm($currentPostId)
+   /**
+    * Keeps the `page_for_term` field on the terms in sync with the `is_page_for_term` field on the page.
+    *
+    * @param postId The ID of the post being saved.
+    */
+    public function updatePageForTerm($postId)
     {
-        $termIds = $_POST['acf'][self::IS_PAGE_FOR_TERM_FIELD_KEY] ?? [];
-        if (!empty($termIds)) {
-            foreach ($termIds as $termId) {
-                update_field(self::PAGE_FOR_TERM_FIELD_KEY, $currentPostId, "term_{$termId}");
+        $existingTerms = (array) get_field(self::PAGE_FIELD_KEY, $postId);
+        $updatedTerms = (array) $_POST['acf'][self::PAGE_FIELD_KEY];
+
+        if (!empty($updatedTerms)) {
+            foreach ($updatedTerms as $termId) {
+                update_field(self::TERM_FIELD_KEY, $postId, "term_{$termId}");
+            }
+        }
+
+        $removedTerms = array_diff($existingTerms, $updatedTerms) ?? false;
+        if ($removedTerms) {
+            foreach ($removedTerms as $termId) {
+                delete_field(self::TERM_FIELD_KEY, "term_{$termId}");
+            }
+        }
+    }
+    /**
+     * Redirects a term archive to its associated page if the `page_for_term` field is set.
+     */
+    public function redirectTermToPageForTerm()
+    {
+        if (is_tax()) {
+            $term   = get_queried_object();
+            $pageId = get_field(self::TERM_FIELD_KEY, $term);
+            if ($pageId) {
+                wp_safe_redirect(get_permalink($pageId), 301);
+                exit;
             }
         }
     }
 
+    /**
+     * Adds a custom column to the edit tags page for each taxonomy
+     */
     public function setupCustomColumns()
     {
         $taxonomies = get_taxonomies(array(), 'names');
@@ -45,39 +65,6 @@ class App
             add_filter('manage_' . $taxonomy . '_custom_column', [$this,'displayCustomColumnContent'], 10, 3);
         }
     }
-
-    /**
-     * Replaces the link to a term archive with the permalink of the associated page.
-     *
-     * @param string $termLink The original term archive link.
-     * @param object $term The current term object.
-     *
-     * @return string The modified term archive link.
-     */
-    public function replaceTermArchiveLink($termLink, $term)
-    {
-        $pageId = get_field('page_for_term', "term_{$term->term_id}");
-        if ($pageId) {
-            $termLink = get_permalink($pageId);
-        }
-        return $termLink;
-    }
-
-    /**
-     * Redirects a term archive to its associated page if the "page_for_term" field is set.
-     */
-    public function redirectTermToPageForTerm()
-    {
-        if (is_tax()) {
-            $term = get_queried_object();
-            $pageId = get_field('page_for_term', $term);
-            if ($pageId) {
-                wp_safe_redirect(get_permalink($pageId), 301);
-                exit;
-            }
-        }
-    }
-
 
     /**
      * Add custom column to edit-tags.php page for all publicly available taxonomies.
@@ -113,7 +100,7 @@ class App
     public function displayCustomColumnContent($content, $columnName, $termId)
     {
         if ($columnName === 'pageForTerm') {
-            $pageForTerm = get_field('page_for_term', 'term_' . $termId);
+            $pageForTerm = get_field(self::TERM_FIELD_KEY, "term_{$termId}");
             if ($pageForTerm) {
                 $content = '<a href="' . get_edit_post_link($pageForTerm) . '">';
                 $content .= get_the_title($pageForTerm);

@@ -39,7 +39,7 @@
         {
             "key": "field_641035087366a",
             "label": "Post type",
-            "name": "page_for_term_posttype",
+            "name": "is_page_for_term_posttype",
             "aria-label": "",
             "type": "select",
             "instructions": "Post type to display in the term archive on this page.",
