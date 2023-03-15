@@ -10,15 +10,13 @@ class App
 
     public function __construct()
     {
-
+        add_action('acf/save_post', [$this, 'updatePageForTerm'], 1, 1);
         add_filter('acf/load_field/key=' . self::POSTTYPE_FIELD_KEY, [$this, 'loadPageForTermPostTypes']);
 
-        add_action('acf/save_post', [$this, 'updatePageForTerm'], 1, 1);
-
+        add_action('pre_get_posts', [$this, 'setupSecondaryQuery'], 2);
         add_action('template_redirect', [$this,'redirectTermToPageForTerm']);
 
         add_action('init', [$this, 'setupCustomColumns']);
-        add_action('pre_get_posts', [$this, 'setupSecondaryQuery'], 2);
     }
 
     public function loadPageForTermPostTypes($field)
@@ -150,17 +148,16 @@ class App
         }
 
         $isPageForTerm = get_field('is_page_for_term', $query->queried_object_id);
-        $postType = get_field('page_for_term_posttype', $query->queried_object_id);
+        $postType = get_field('is_page_for_term_posttype', $query->queried_object_id);
 
         if ($postType && is_array($isPageForTerm) && !empty($isPageForTerm)) {
-            $postsPerPage = isset($_REQUEST['number']) ? $_REQUEST['number'] : get_option('posts_per_page');
             $secondaryQueryArgs =
             [
             'tax_query' => [
                 'relation' => 'OR',
             ],
             'post_type' => $postType,
-            'posts_per_page' => $postsPerPage,
+            'posts_per_page' => get_option('posts_per_page'),
             'paged' => ( get_query_var('paged') ) ? get_query_var('paged') : 1,
             ];
 
