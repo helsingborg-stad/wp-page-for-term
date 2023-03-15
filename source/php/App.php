@@ -151,13 +151,14 @@ class App
         $postType = get_field('is_page_for_term_posttype', $query->queried_object_id);
 
         if ($postType && is_array($isPageForTerm) && !empty($isPageForTerm)) {
+            $postCount = get_theme_mod("archive_{$postType}_post_count", get_option('posts_per_page'));
             $secondaryQueryArgs =
             [
             'tax_query' => [
                 'relation' => 'OR',
             ],
             'post_type' => $postType,
-            'posts_per_page' => get_option('posts_per_page'),
+            'posts_per_page' => $postCount,
             'paged' => ( get_query_var('paged') ) ? get_query_var('paged') : 1,
             ];
 
