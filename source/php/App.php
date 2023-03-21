@@ -134,7 +134,7 @@ class App
 
 
     /**
-     * Sets up a secondary query for the current page based on the is_page_for_term field.
+     * Additional filtering based on selected taxonomy terms.
      *
      * @note WP_Query with tax_query set defaults to post_type = 'any' instead of 'post'.
      *
@@ -147,37 +147,66 @@ class App
             return;
         }
 
-        $isPageForTerm = get_field('is_page_for_term', $query->queried_object_id);
+        $secondaryQuery = false;
+
+        $isPageForTerms = (array) get_field('is_page_for_term', $query->queried_object_id);
         $postType = get_field('is_page_for_term_posttype', $query->queried_object_id);
 
-        if ($postType && is_array($isPageForTerm) && !empty($isPageForTerm)) {
+        if ($postType && !empty($isPageForTerms)) {
             $postCount = get_theme_mod("archive_{$postType}_post_count", get_option('posts_per_page'));
             $secondaryQueryArgs =
             [
-            'tax_query' => [
-                'relation' => 'OR',
-            ],
-            'post_type' => $postType,
-            'posts_per_page' => $postCount,
-            'paged' => ( get_query_var('paged') ) ? get_query_var('paged') : 1,
+                'tax_query' => [
+                    'relation' => \apply_filters('Municipio/secondaryQuery/relation', 'AND'),
+                ],
+                'post_type'      => $postType,
+                'posts_per_page' => $postCount,
+                'paged'          => ( get_query_var('paged') ) ? get_query_var('paged') : 1,
             ];
 
-            foreach ($isPageForTerm as $termId) {
-                $term = get_term($termId);
-                if (!$term || is_wp_error($term)) {
-                    continue;
+            // Preselected filters ($_REQUEST)
+            $filtersSelectedByUser = \apply_filters('Municipio/secondaryQuery/selectedFilters', (array) $_REQUEST);
+
+            if (!empty($filtersSelectedByUser)) {
+                $secondaryQueryArgs['tax_query']['relation'] = \apply_filters('Municipio/secondaryQuery/relation', 'AND');
+                foreach ($filtersSelectedByUser as $key => $values) {
+                    $terms = [];
+                    /* Check if the taxonomy is valid for the selected post type. */
+                    if (in_array($key, get_object_taxonomies($postType)) && is_array($values) && !empty($values)) {
+                        foreach ($values as $value) {
+                            $term = get_term_by('slug', $value, $key);
+                            if (!$term || is_wp_error($term)) {
+                                continue;
+                            }
+                            $terms[] = $term->term_id;
+                        }
+                    }
+                    if (!empty($terms)) {
+                        $secondaryQueryArgs['tax_query'][] = [
+                            'taxonomy' => $term->taxonomy,
+                            'field' => 'term_id',
+                            'terms' => $terms,
+                        ];
+                    }
                 }
-                $secondaryQueryArgs['tax_query'][] = [
-                'taxonomy' => $term->taxonomy,
-                'field' => 'term_id',
-                'terms' => $term->term_id,
-                ];
+            } else {
+                foreach ($isPageForTerms as $termId) {
+                    $term = get_term($termId);
+                    if (!$term || is_wp_error($term)) {
+                        continue;
+                    }
+                    $secondaryQueryArgs['tax_query'][] = [
+                        'taxonomy' => $term->taxonomy,
+                        'field' => 'term_id',
+                        'terms' => $term->term_id,
+                    ];
+                }
             }
 
             $secondaryQueryArgs = apply_filters('wpPageForTerm/secondaryQueryArgs', $secondaryQueryArgs);
             $secondaryQuery = apply_filters('wpPageForTerm/secondaryQuery', new \WP_Query($secondaryQueryArgs));
-
-            $query->set('secondaryQuery', $secondaryQuery);
         }
+
+        $query->set('secondaryQuery', $secondaryQuery);
     }
 }
