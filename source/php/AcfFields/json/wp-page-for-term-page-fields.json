@@ -58,7 +58,16 @@
                 "id": ""
             },
             "choices": {
-                "post": "Posts"
+                "post": "Inl\u00e4gg",
+                "page": "Sidor",
+                "attachment": "Media",
+                "event": "Evenemang",
+                "local-events": "Lokalt evenemang",
+                "place": "Platser",
+                "guide": "Guider",
+                "project": "Initiativ",
+                "challenge": "Utmaningar",
+                "platform": "Plattformar"
             },
             "default_value": "post",
             "return_format": "value",
