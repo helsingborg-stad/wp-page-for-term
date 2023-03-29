@@ -17,6 +17,8 @@ class App
         add_action('template_redirect', [$this,'redirectTermToPageForTerm']);
 
         add_action('init', [$this, 'setupCustomColumns']);
+
+        add_filter('post_thumbnail_id', [$this, 'fallbackFeaturedImageToEmblem'], 10, 2);
     }
 
     public function loadPageForTermPostTypes($field)
@@ -208,5 +210,29 @@ class App
         }
 
         $query->set('secondaryQuery', $secondaryQuery);
+    }
+
+    /**
+     * If the post has no featured image and it's being displayed on a page for a term
+     * then use the emblem as the featured image
+     *
+     * @note $post is the post object the featured image belongs to
+     * whilst get_queried_object_id() is the id of post/page currently being displayed as the main query.
+     *
+     * @param attachmentId The attachment ID of the featured image.
+     * @param post The post object.
+     *
+     * @return The attachment ID of the featured image.
+     */
+    public function fallbackFeaturedImageToEmblem($attachmentId, $post)
+    {
+        if (0 == $attachmentId && !empty($this->isPageForTerm(get_queried_object_id()))) {
+            $attachmentId = attachment_url_to_postid(get_theme_mod('logotype_emblem'));
+        }
+        return $attachmentId;
+    }
+    public function isPageForTerm(int $postId = 0)
+    {
+        return get_field('is_page_for_term', $postId);
     }
 }
