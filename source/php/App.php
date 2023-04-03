@@ -166,6 +166,9 @@ class App
 
             // Preselected filters ($_REQUEST)
             $filtersSelectedByUser = \apply_filters('Municipio/secondaryQuery/selectedFilters', (array) $_REQUEST);
+            if (isset($filtersSelectedByUser['paged'])) {
+                unset($filtersSelectedByUser['paged']);
+            }
 
             if (!empty($filtersSelectedByUser)) {
                 $secondaryQueryArgs['tax_query']['relation'] = \apply_filters('Municipio/secondaryQuery/relation', 'AND');
