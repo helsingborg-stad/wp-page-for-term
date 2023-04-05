@@ -212,25 +212,4 @@ class App
 
         $query->set('secondaryQuery', $secondaryQuery);
     }
-
-    /**
-     * If the post has a value for the ACF field "is_page_for_term", return the value of that field.
-     * Otherwise, return false.
-     *
-     * @param int postId The post ID of the page you want to check. If you don't pass this, it will use
-     * the current page.
-     *
-     * @return An array of term objects.
-     */
-    public function isPageForTerm(int $postId = 0)
-    {
-        if (!$postId) {
-            $postId = get_queried_object_id();
-        }
-        $terms = (array) get_field('is_page_for_term', $postId);
-        if (empty($terms)) {
-            return false;
-        }
-        return $terms;
-    }
 }

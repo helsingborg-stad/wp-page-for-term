@@ -4,7 +4,7 @@
  * Plugin Name:       WP Page For Term
  * Plugin URI:        https://github.com/annalinneajohansson/wp-page-for-term
  * Description:       Allows you to set a static page as the replacement for any term archive.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Anna Johansson
  * Author URI:        https://github.com/annalinneajohansson
  * License:           MIT
@@ -20,12 +20,12 @@ if (! defined('WPINC')) {
 
 define('WP_PLUGIN_PAGE_FOR_TERM_PATH', plugin_dir_path(__FILE__));
 
-// Register the autoloader
-require __DIR__ . '/vendor/autoload.php';
+// Register the autoloaders
+require_once __DIR__ . '/vendor/autoload.php';
 
-add_action('plugins_loaded', function () {
-});
-
+foreach (glob(plugin_dir_path(__FILE__) . 'source/php/*.php') as $file) {
+    require_once $file;
+}
 // Acf auto import and export
 add_action('acf/init', function () {
     load_plugin_textdomain('wp-page-for-term', false, dirname(plugin_basename(__FILE__)) . '/languages');
