@@ -206,7 +206,12 @@ class App
                 }
             }
 
-            $secondaryQueryArgs = apply_filters('wpPageForTerm/secondaryQueryArgs', $secondaryQueryArgs);
+            $secondaryQueryArgs = apply_filters(
+                'wpPageForTerm/secondaryQueryArgs',
+                $secondaryQueryArgs,
+                $query->queried_object_id,
+                $isPageForTerms
+            );
             $secondaryQuery = apply_filters('wpPageForTerm/secondaryQuery', new \WP_Query($secondaryQueryArgs));
         }
 
