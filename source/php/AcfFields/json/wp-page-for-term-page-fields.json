@@ -62,12 +62,10 @@
                 "page": "Sidor",
                 "attachment": "Media",
                 "event": "Evenemang",
-                "local-events": "Lokalt evenemang",
                 "place": "Platser",
                 "guide": "Guider",
-                "project": "Initiativ",
-                "challenge": "Utmaningar",
-                "platform": "Plattformar"
+                "infopoint": "Infopoints",
+                "test": "Test Post Type"
             },
             "default_value": "post",
             "return_format": "value",
@@ -78,6 +76,26 @@
             "ui": 1,
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_6458923e05bfd",
+            "label": "Display map",
+            "name": "display_secondary_map",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Display the posts as markers on a map",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
         }
     ],
     "location": [
