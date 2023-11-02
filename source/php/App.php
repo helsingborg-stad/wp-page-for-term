@@ -39,7 +39,7 @@ class App
     public function updatePageForTerm($postId)
     {
         $existingTerms = (array) get_field(self::PAGE_FIELD_KEY, $postId);
-        $updatedTerms = (array) $_POST['acf'][self::PAGE_FIELD_KEY];
+        $updatedTerms = isset($_POST['acf'][self::PAGE_FIELD_KEY]) ? (array) $_POST['acf'][self::PAGE_FIELD_KEY] : [];
 
         if (!empty($updatedTerms)) {
             foreach ($updatedTerms as $termId) {
