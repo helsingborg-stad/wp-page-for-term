@@ -58,7 +58,7 @@ jobs:
           artifact: "assets.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           release: ${{ github.event.release.tag_name }}
-          repo: ${{ GITHUB_REPOSITORY }}
+          repo: ${{ github.repository }}
           artifact_mime_type: application/zip
 
       - name: Setup PHP
@@ -112,5 +112,5 @@ jobs:
           artifact: "release.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           release: ${{ github.event.release.tag_name }}
-          repo: ${{ GITHUB_REPOSITORY }}
+          repo: ${{ github.repository }}
           artifact_mime_type: application/zip
