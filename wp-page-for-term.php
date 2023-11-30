@@ -4,7 +4,7 @@
  * Plugin Name:       WP Page For Term
  * Plugin URI:        https://github.com/annalinneajohansson/wp-page-for-term
  * Description:       Allows you to set a static page as the replacement for any term archive.
- * Version: 3.0.9
+ * Version: 3.0.11
  * Author:            Anna Johansson
  * Author URI:        https://github.com/annalinneajohansson
  * License:           MIT
