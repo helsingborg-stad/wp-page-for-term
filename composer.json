@@ -26,5 +26,5 @@
         "codedungeon/phpunit-result-printer": "^0.31.0",
         "phpunit/phpunit": "^9.5"
     },
-    "version": "3.0.11"
+    "version": "3.0.14"
 }
