@@ -56,8 +56,6 @@ jobs:
           filename: '../assets.zip'
           directory: dist
           exclusions: '*.git* /*node_modules/* */source/sass/* */source/js/*'
-      - name: ls
-        run: ls -ahl
       - name: Upload Assets
         uses: helsingborg-stad/upload-artifact@1.0.0
         with:
