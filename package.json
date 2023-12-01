@@ -1,6 +1,6 @@
 {
     "name": "wp-page-for-term",
-    "version": "3.0.19",
+    "version": "3.0.21",
     "description": "Allows you to set a static page as the replacement for any term archive.",
     "main": "",
     "repository": {
